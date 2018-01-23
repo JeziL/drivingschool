@@ -44,6 +44,7 @@ class ClassTypeAdmin(admin.ModelAdmin):
 # 招生代表模型内联管理类
 class EnrollerInlineAdmin(admin.StackedInline):
     model = Enroller
+    extra = 0
 
 
 # 渠道模型管理类
