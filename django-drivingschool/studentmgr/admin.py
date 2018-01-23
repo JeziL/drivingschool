@@ -42,7 +42,7 @@ class ClassTypeAdmin(admin.ModelAdmin):
 
 
 # 招生代表模型内联管理类
-class EnrollerInlineAdmin(admin.StackedInline):
+class EnrollerInlineAdmin(admin.TabularInline):
     model = Enroller
     extra = 0
 
