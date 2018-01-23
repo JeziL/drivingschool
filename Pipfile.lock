@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e48ad8ee4e5257e9e271919fb1a7a5153ceec442cd260b0fab9620aef618b4dc"
+            "sha256": "f0a5b12c004245278d8b0ad29c371ca4e39b3c97951755be97e9e40bbbc7d4f9"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -29,6 +29,9 @@
         ]
     },
     "default": {
+        "cce4815": {
+            "file": "https://github.com/Sicilia04/django-suit/tarball/v2"
+        },
         "django": {
             "hashes": [
                 "sha256:52475f607c92035d4ac8fee284f56213065a4a6b25ed43f7e39df0e576e69e9f",

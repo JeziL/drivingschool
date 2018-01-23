@@ -25,12 +25,13 @@ SECRET_KEY = 'i%*5c)69n#v9slr&vdfts!sp57^dg91_mxmzeb=o#l5nxegnkj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'studentmgr.apps.DjangoSuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
