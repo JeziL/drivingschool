@@ -1,9 +1,11 @@
 from django.contrib import admin
+from suit.admin import RelatedFieldAdmin, get_related_field
 from .models import Student, ClassType, Enroller, Channel
 
 
 # 学员模型管理类
-class StudentAdmin(admin.ModelAdmin):
+@admin.register(Student)
+class StudentAdmin(RelatedFieldAdmin):
     list_display = ('name',
                     'mobile',
                     'idNo',
@@ -18,6 +20,7 @@ class StudentAdmin(admin.ModelAdmin):
                    'classType',
                    'currentStage',
                    'enroller__channel__channelType')
+    suit_list_filter_horizontal = list_filter
     search_fields = ('name',
                      'mobile',
                      'idNo',
@@ -30,7 +33,8 @@ class StudentAdmin(admin.ModelAdmin):
 
 
 # 班型模型管理类
-class ClassTypeAdmin(admin.ModelAdmin):
+@admin.register(ClassType)
+class ClassTypeAdmin(RelatedFieldAdmin):
     list_display = ('name',
                     'licType',
                     'price',
@@ -38,6 +42,7 @@ class ClassTypeAdmin(admin.ModelAdmin):
                     'createTime')
     list_filter = ('licType',
                    'period')
+    suit_list_filter_horizontal = list_filter
     search_fields = ('name', )
 
 
@@ -48,17 +53,14 @@ class EnrollerInlineAdmin(admin.TabularInline):
 
 
 # 渠道模型管理类
-class ChannelAdmin(admin.ModelAdmin):
+@admin.register(Channel)
+class ChannelAdmin(RelatedFieldAdmin):
     list_display = ('name',
                     'channelType',
                     'addr',
                     'createTime')
     list_filter = ('createTime',
                    'channelType')
+    suit_list_filter_horizontal = list_filter
     search_fields = ('name', )
     inlines = (EnrollerInlineAdmin, )
-
-
-admin.site.register(Student, StudentAdmin)
-admin.site.register(ClassType, ClassTypeAdmin)
-admin.site.register(Channel, ChannelAdmin)

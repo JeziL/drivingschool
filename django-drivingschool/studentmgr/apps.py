@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 from suit.apps import DjangoSuitConfig
+from suit.menu import ParentItem, ChildItem
 
 
 class StudentmgrConfig(AppConfig):
@@ -8,4 +9,16 @@ class StudentmgrConfig(AppConfig):
 
 
 class SuitConfig(DjangoSuitConfig):
-    layout = 'horizontal'
+    layout = 'vertical'
+    menu = (
+        ParentItem('人员管理', children=[
+            ChildItem('学员管理', model='studentmgr.student'),
+            ChildItem('用户管理', model='auth.user')
+        ]),
+        ParentItem('教学管理', children=[
+            ChildItem('班型管理', model='studentmgr.classtype')
+        ]),
+        ParentItem('招生管理', children=[
+            ChildItem('渠道管理', model='studentmgr.channel')
+        ])
+    )
