@@ -41,14 +41,9 @@ class ClassTypeAdmin(admin.ModelAdmin):
     search_fields = ('name', )
 
 
-# 招生代表模型管理类
-class EnrollerAdmin(admin.ModelAdmin):
-    list_display = ('name',
-                    'mobile',
-                    'channel')
-    list_filter = ('channel', )
-    search_fields = ('name',
-                     'mobile')
+# 招生代表模型内联管理类
+class EnrollerInlineAdmin(admin.StackedInline):
+    model = Enroller
 
 
 # 渠道模型管理类
@@ -60,9 +55,9 @@ class ChannelAdmin(admin.ModelAdmin):
     list_filter = ('createTime',
                    'channelType')
     search_fields = ('name', )
+    inlines = (EnrollerInlineAdmin, )
 
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(ClassType, ClassTypeAdmin)
-admin.site.register(Enroller, EnrollerAdmin)
 admin.site.register(Channel, ChannelAdmin)
