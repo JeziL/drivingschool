@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import Student, ClassType, Enroller, Channel
 
 
+# 学员模型管理类
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('name',
                     'mobile',
@@ -28,6 +29,7 @@ class StudentAdmin(admin.ModelAdmin):
     channel_type.short_description = '渠道类型'
 
 
+# 班型模型管理类
 class ClassTypeAdmin(admin.ModelAdmin):
     list_display = ('name',
                     'licType',
@@ -39,6 +41,7 @@ class ClassTypeAdmin(admin.ModelAdmin):
     search_fields = ('name', )
 
 
+# 招生代表模型管理类
 class EnrollerAdmin(admin.ModelAdmin):
     list_display = ('name',
                     'mobile',
@@ -48,6 +51,7 @@ class EnrollerAdmin(admin.ModelAdmin):
                      'mobile')
 
 
+# 渠道模型管理类
 class ChannelAdmin(admin.ModelAdmin):
     list_display = ('name',
                     'channelType',

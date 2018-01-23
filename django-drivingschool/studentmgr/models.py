@@ -3,6 +3,7 @@ from django.utils import timezone
 from .options import *
 
 
+# 渠道模型类
 class Channel(models.Model):
     class Meta:
         verbose_name = '渠道'
@@ -17,6 +18,7 @@ class Channel(models.Model):
         return self.name
 
 
+# 招生代表模型类
 class Enroller(models.Model):
     class Meta:
         verbose_name = '招生代表'
@@ -29,6 +31,7 @@ class Enroller(models.Model):
         return self.name
 
 
+# 班型模型类
 class ClassType(models.Model):
     class Meta:
         verbose_name = '班型'
@@ -43,6 +46,7 @@ class ClassType(models.Model):
         return self.name
 
 
+# 学员模型类
 class Student(models.Model):
     class Meta:
         verbose_name = '学员'
