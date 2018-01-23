@@ -1,5 +1,5 @@
 from django.contrib import admin
-from suit.admin import RelatedFieldAdmin, get_related_field
+from suit.admin import RelatedFieldAdmin
 from .models import Student, ClassType, Enroller, Channel
 
 
