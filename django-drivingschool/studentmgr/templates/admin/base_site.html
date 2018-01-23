@@ -1,0 +1,68 @@
+{% extends 'admin/base_site.html' %}
+{% load i18n admin_static %}
+
+{% block title %}鸿铭驾校管理系统{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            鸿铭驾校管理系统
+        </a>
+    </h1>
+{% endblock %}
+
+{% block welcome-msg %}
+    <span class="welcome">
+        欢迎,
+        <strong>{% firstof user.get_short_name user.get_username %}</strong>.
+    </span>
+{% endblock %}
+
+{% block userlinks %}
+    {% if site_url %}
+        <a href="{% url 'admin:index' %}" class="icon-link view-site-link" data-title="{% trans 'View site' %}">{% trans 'View site' %}</a>
+        <span class="separator">/</span>
+    {% endif %}
+    {% if user.is_active and user.is_staff %}
+        {% url 'django-admindocs-docroot' as docsroot %}
+        {% if docsroot %}
+            <a href="{{ docsroot }}" class="icon-link documentation-link" data-title="{% trans 'Documentation' %}">{% trans 'Documentation' %}</a>
+            <span class="separator">/</span>
+        {% endif %}
+    {% endif %}
+    {% if user.has_usable_password %}
+        <a href="{% url 'admin:password_change' %}" class="icon-link change-password-link" data-title="{% trans 'Change password' %}">{% trans 'Change password' %}</a>
+        <span class="separator">/</span>
+    {% endif %}
+    <a href="{% url 'admin:logout' %}" class="icon-link logout-link" data-title="{% trans 'Log out' %}">{% trans 'Log out' %}</a>
+{% endblock %}
+
+
+{% block footer %}
+    {% if not is_popup %}
+        <div id="footer">
+        <div class="footer">
+            <div class="container-fluid">
+                {% block footer_content %}
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 text-sm-center footer-copyright">
+                            {% block copyright %}
+                                Copyright &copy;
+                                <span class="hidden-md-down" id="initYear"></span>{% now "Y" %}
+                                <br>烟台鸿铭驾驶员培训有限公司
+                            {% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+        </div>
+        </div>
+    {% endif %}
+    <script type="text/javascript">
+        var currentYear = (new Date()).getFullYear();
+        if (currentYear > 2018) {
+            document.getElementById("initYear").innerHTML ="2018-";
+        }
+    </script>
+{% endblock %}
+
