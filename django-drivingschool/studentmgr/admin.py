@@ -25,6 +25,36 @@ class StudentAdmin(RelatedFieldAdmin):
                      'mobile',
                      'idNo',
                      'enroller__name')
+    fieldsets = [
+        ('个人信息', {
+            'fields': [
+                'name',
+                'sex',
+                'idNo',
+                'region',
+                'mobile',
+                'backupPhone',
+                'addr',
+            ]
+        }),
+        ('报名信息', {
+            'fields': [
+                'licType',
+                'applyType',
+                'origLicType',
+                'licChangeDate',
+                'classType',
+                'enroller',
+                'currentStage',
+                'enrollDate',
+            ]
+        }),
+        ('其他信息', {
+            'fields': [
+                'note',
+            ]
+        })
+    ]
 
     # 用于显示渠道类型
     def channel_type(self, obj):
