@@ -17,6 +17,12 @@ class StudentForm(ModelForm):
             'note': AutosizedTextarea,
         }
 
+    class Media:
+        js = (
+            'admin/js/jquery-3.3.1.min.js',
+            'admin/js/student_detail.js',
+        )
+
 
 # 学员模型管理类
 @admin.register(Student)
