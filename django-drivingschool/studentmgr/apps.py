@@ -12,6 +12,7 @@ class SuitConfig(DjangoSuitConfig):
     layout = 'vertical'
     menu = (
         ParentItem('人员管理', children=[
+            ChildItem('学员报名', url='admin:studentmgr_student_add'),
             ChildItem('学员管理', model='studentmgr.student'),
             ChildItem('用户管理', model='auth.user')
         ]),
