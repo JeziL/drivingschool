@@ -21,5 +21,9 @@ class SuitConfig(DjangoSuitConfig):
         ]),
         ParentItem('招生管理', children=[
             ChildItem('渠道管理', model='studentmgr.channel')
+        ]),
+        ParentItem('财务管理', children=[
+            ChildItem('费用登记', url='admin:studentmgr_fee_add'),
+            ChildItem('费用查询', model='studentmgr.fee')
         ])
     )

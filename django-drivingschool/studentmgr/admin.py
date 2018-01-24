@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 from suit.admin import RelatedFieldAdmin
 from suit.widgets import AutosizedTextarea
-from .models import Student, ClassType, Enroller, Channel
+from .models import Student, ClassType, Enroller, Channel, Fee
 
 
 # 页面标题
@@ -116,3 +116,53 @@ class ChannelAdmin(RelatedFieldAdmin):
     suit_list_filter_horizontal = list_filter
     search_fields = ('name', )
     inlines = (EnrollerInlineAdmin, )
+
+
+# 费用模型管理类
+@admin.register(Fee)
+class FeeAdmin(RelatedFieldAdmin):
+    list_display = ('feeId',
+                    'student_name',
+                    'student_mobile',
+                    'student_idNo',
+                    'student_enroller_name',
+                    'student_licType',
+                    'student_classType',
+                    'feeType',
+                    'money',
+                    'createTime')
+    list_filter = ('createTime',
+                   'student__licType',
+                   'student__classType',
+                   'feeType')
+    suit_list_filter_horizontal = list_filter
+    search_fields = ('student__name',
+                     'student__mobile',
+                     'student__idNo',
+                     'student__enroller__name')
+
+    # 用于获取学员相关信息
+    def student_name(self, obj):
+        return obj.student.name
+
+    def student_mobile(self, obj):
+        return obj.student.mobile
+
+    def student_idNo(self, obj):
+        return obj.student.idNo
+
+    def student_enroller_name(self, obj):
+        return obj.student.enroller.name
+
+    def student_licType(self, obj):
+        return obj.student.get_licType_display()
+
+    def student_classType(self, obj):
+        return obj.student.classType.name
+
+    student_name.short_description = '学员姓名'
+    student_mobile.short_description = '手机号'
+    student_idNo.short_description = '证件号'
+    student_enroller_name.short_description = '招生代表'
+    student_licType.short_description = '驾照类型'
+    student_classType.short_description = '班型'

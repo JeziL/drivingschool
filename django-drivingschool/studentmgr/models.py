@@ -72,3 +72,33 @@ class Student(models.Model):
         return self.name
 
 
+# 用于在创建时生成按日自增的费用编号
+def increment_fee_id():
+    prefix = 'FYBM'
+    last_fee = Fee.objects.all().order_by('id').last()
+    cur_date = timezone.localtime().strftime('%y%m%d')
+    if not last_fee:
+        return prefix + cur_date + '001'
+    last_id = last_fee.feeId
+    last_date = last_id[4:10]
+    last_id_no = int(last_id[10:13])
+    if last_date == cur_date:
+        return prefix + cur_date + str(last_id_no + 1).zfill(3)
+    else:
+        return prefix + cur_date + '001'
+
+
+# 费用模型类
+class Fee(models.Model):
+    class Meta:
+        verbose_name = '费用'
+        verbose_name_plural = '费用'
+    student = models.ForeignKey(Student, verbose_name='交费学员', on_delete=models.CASCADE)
+    feeType = models.IntegerField('交费类别', choices=FEE_TYPE_OPTIONS, default=0)
+    note = models.CharField('备注', max_length=100, null=True, blank=True)
+    money = models.IntegerField('收费金额', default=0)
+    feeId = models.CharField('编号', max_length=15, default=increment_fee_id, editable=False)
+    createTime = models.DateTimeField('登记时间', default=timezone.now)
+
+    def __str__(self):
+        return self.feeId
