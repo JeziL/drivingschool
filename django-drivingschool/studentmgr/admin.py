@@ -1,11 +1,23 @@
 from django.contrib import admin
+from django.forms import ModelForm
 from suit.admin import RelatedFieldAdmin
+from suit.widgets import AutosizedTextarea
 from .models import Student, ClassType, Enroller, Channel
+
+
+# 学员模型表单类
+class StudentForm(ModelForm):
+    class Meta:
+        widgets = {
+            'addr': AutosizedTextarea,
+            'note': AutosizedTextarea,
+        }
 
 
 # 学员模型管理类
 @admin.register(Student)
 class StudentAdmin(RelatedFieldAdmin):
+    form = StudentForm
     list_display = ('name',
                     'mobile',
                     'idNo',
