@@ -5,6 +5,10 @@ from suit.widgets import AutosizedTextarea
 from .models import Student, ClassType, Enroller, Channel
 
 
+# 页面标题
+admin.site.site_header = '鸿铭驾校管理系统'
+
+
 # 学员模型表单类
 class StudentForm(ModelForm):
     class Meta:
