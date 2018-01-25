@@ -38,7 +38,7 @@ class ClassType(models.Model):
         verbose_name_plural = '班型'
     name = models.CharField('班型名称', max_length=20)
     licType = models.IntegerField('驾照类型', choices=LICENSE_TYPE_OPTIONS, default=5)
-    price = models.CharField('班型价格', max_length=5)
+    price = models.CharField('班型价格', max_length=10)
     period = models.IntegerField('学车时段', choices=PERIOD_OPTIONS, default=0)
     createTime = models.DateTimeField('创建时间', default=timezone.now)
 
@@ -96,7 +96,7 @@ class Fee(models.Model):
     student = models.ForeignKey(Student, verbose_name='交费学员', on_delete=models.CASCADE)
     feeType = models.IntegerField('交费类别', choices=FEE_TYPE_OPTIONS, default=0)
     note = models.CharField('备注', max_length=100, null=True, blank=True)
-    money = models.IntegerField('收费金额', default=0)
+    money = models.CharField('收费金额', max_length=10)
     feeId = models.CharField('编号', max_length=15, default=increment_fee_id, editable=False)
     createTime = models.DateTimeField('登记时间', default=timezone.now)
 

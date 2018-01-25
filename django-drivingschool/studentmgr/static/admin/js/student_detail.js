@@ -17,9 +17,8 @@ $(document).ready(function () {
 
     $('div.add-row a').click(function () {
         var price_str = $('div.field-class_type_price p').text();
-        var price = parseInt(price_str, 10);
         $('div.field-money input').each(function () {
-            $(this).val(price);
+            $(this).val(price_str);
         })
     })
 });
