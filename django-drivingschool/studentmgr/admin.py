@@ -24,6 +24,13 @@ class StudentForm(ModelForm):
         )
 
 
+# 费用模型内联管理类
+class FeeInlineAdmin(admin.StackedInline):
+    model = Fee
+    extra = 0
+    suit_classes = 'suit-tab suit-tab-fees'
+
+
 # 学员模型管理类
 @admin.register(Student)
 class StudentAdmin(RelatedFieldAdmin):
@@ -47,8 +54,11 @@ class StudentAdmin(RelatedFieldAdmin):
                      'mobile',
                      'idNo',
                      'enroller__name')
+    inlines = (FeeInlineAdmin, )
+    readonly_fields = ('class_type_price', )
     fieldsets = [
         ('个人信息', {
+            'classes': ('suit-tab suit-tab-enroll', ),
             'fields': [
                 'name',
                 'sex',
@@ -60,6 +70,7 @@ class StudentAdmin(RelatedFieldAdmin):
             ]
         }),
         ('报名信息', {
+            'classes': ('suit-tab suit-tab-enroll', ),
             'fields': [
                 'licType',
                 'applyType',
@@ -72,16 +83,32 @@ class StudentAdmin(RelatedFieldAdmin):
             ]
         }),
         ('其他信息', {
+            'classes': ('suit-tab suit-tab-enroll', ),
             'fields': [
                 'note',
             ]
+        }),
+        (None, {
+            'classes': ('suit-tab suit-tab-fees', ),
+            'fields': [
+                'class_type_price',
+            ]
         })
     ]
+    suit_form_tabs = (
+        ('enroll', '报名'),
+        ('fees', '交费'),
+    )
 
     # 用于显示渠道类型
     def channel_type(self, obj):
         return obj.enroller.channel.get_channelType_display()
     channel_type.short_description = '渠道类型'
+
+    # 用于显示班型价格
+    def class_type_price(self, obj):
+        return obj.classType.price
+    class_type_price.short_description = '班型价格'
 
 
 # 班型模型管理类

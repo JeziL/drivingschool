@@ -91,8 +91,8 @@ def increment_fee_id():
 # 费用模型类
 class Fee(models.Model):
     class Meta:
-        verbose_name = '费用'
-        verbose_name_plural = '费用'
+        verbose_name = '交费记录'
+        verbose_name_plural = '交费记录'
     student = models.ForeignKey(Student, verbose_name='交费学员', on_delete=models.CASCADE)
     feeType = models.IntegerField('交费类别', choices=FEE_TYPE_OPTIONS, default=0)
     note = models.CharField('备注', max_length=100, null=True, blank=True)
