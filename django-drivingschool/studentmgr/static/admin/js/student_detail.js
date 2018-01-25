@@ -18,7 +18,9 @@ $(document).ready(function () {
     $('div.add-row a').click(function () {
         var price_str = $('div.field-class_type_price p').text();
         $('div.field-money input').each(function () {
-            $(this).val(price_str);
+            if ($(this).val() === '') {
+                $(this).val(price_str);
+            }
         })
     })
 });
