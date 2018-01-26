@@ -69,7 +69,8 @@ function printFee(date, feeId, enroller, name, stuId, mobile, feeType, payment, 
     var classTypeStr = classType + " " + licType;
     var moneyVal = parseFloat(money);
     var moneyUpStr = upDigit(moneyVal);
-    console.log(moneyUpStr);
+    var moneyStr = '¥' + money + '元';
+    console.log(moneyStr);
 }
 
 function upDigit(n) {
