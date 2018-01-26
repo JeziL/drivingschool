@@ -40,5 +40,6 @@ function addPrintButton() {
 }
 
 function onPrintBtnClicked() {
+    $('input[name="_continue"]').click();
     console.log("button click.");
 }
