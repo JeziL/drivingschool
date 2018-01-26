@@ -45,9 +45,21 @@ function addPrintButton() {
 function onPrintBtnClicked(e) {
     var feeDiv = $(e.target).parent().parent();
 
-    var dateField = feeDiv.find('input.vDateField');
-    var dateStr = dateField.val().replace(/\//g, "-");
-
+    var dateStr = feeDiv.find('input.vDateField').val().replace(/\//g, "-");
     var feeId = feeDiv.find('span.inline_label').text();
-    console.log(feeId);
+    var enroller = $('select#id_enroller option:selected').text();
+    var student = $('input#id_name').val();
+    var stuId = $('input#id_idNo').val();
+    var mobile = $('input#id_mobile').val();
+
+    var feeType = feeDiv.find('div.field-feeType').find('select option:selected').text();
+    var note = feeDiv.find('div.field-note').find('input.vTextField').val();
+    if (note !== "") {
+        feeType = note;
+    }
+
+    var classType = $('select#id_classType option:selected').text();
+    var money = feeDiv.find('div.field-money').find('input.vTextField').val();
+
+    console.log(money);
 }
