@@ -1,0 +1,9 @@
+input.printBtn {
+    background: none !important;
+    border: none;
+    font: inherit;
+    color: inherit;
+    margin-right: 5px;
+    cursor: pointer;
+    text-decoration: underline;
+}

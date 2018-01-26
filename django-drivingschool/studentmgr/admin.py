@@ -22,6 +22,11 @@ class StudentForm(ModelForm):
             'admin/js/jquery-3.3.1.min.js',
             'admin/js/student_detail.js',
         )
+        css = {
+            'all': (
+                'admin/css/student_detail.css',
+            )
+        }
 
 
 # 费用模型内联管理类
