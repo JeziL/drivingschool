@@ -15,6 +15,13 @@ $(document).ready(function () {
         }
     });
 
+    $('a#suit_form_tab_fees').click(function () {
+        $('input.default').attr('name', '_continue');
+    });
+    $('a#suit_form_tab_enroll').click(function () {
+        $('input.default').attr('name', '_save');
+    });
+
     addPrintButton();
     $('div.add-row a').click(function () {
         var price_str = $('div.field-class_type_price p').text();
