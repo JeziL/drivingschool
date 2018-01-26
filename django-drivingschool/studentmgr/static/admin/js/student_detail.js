@@ -51,15 +51,67 @@ function onPrintBtnClicked(e) {
     var student = $('input#id_name').val();
     var stuId = $('input#id_idNo').val();
     var mobile = $('input#id_mobile').val();
-
+    var licType = $('select#id_licType option:selected').text();
+    var classType = $('select#id_classType option:selected').text();
+    var money = feeDiv.find('div.field-money').find('input.vTextField').val();
+    var payment = feeDiv.find('div.field-paymentMethod').find('select option:selected').text();
     var feeType = feeDiv.find('div.field-feeType').find('select option:selected').text();
+
     var note = feeDiv.find('div.field-note').find('input.vTextField').val();
     if (note !== "") {
         feeType = note;
     }
 
-    var classType = $('select#id_classType option:selected').text();
-    var money = feeDiv.find('div.field-money').find('input.vTextField').val();
+    printFee(dateStr, feeId, enroller, student, stuId, mobile, feeType, payment, classType, licType, money);
+}
 
-    console.log(money);
+function printFee(date, feeId, enroller, name, stuId, mobile, feeType, payment, classType, licType, money) {
+    var classTypeStr = classType + " " + licType;
+    var moneyVal = parseFloat(money);
+    var moneyUpStr = upDigit(moneyVal);
+    console.log(moneyUpStr);
+}
+
+function upDigit(n) {
+    var fraction = ['角', '分'];
+    var digit = [
+        '零',
+        '壹',
+        '贰',
+        '叁',
+        '肆',
+        '伍',
+        '陆',
+        '柒',
+        '捌',
+        '玖'
+    ];
+    var unit = [
+        [
+            '元', '万', '亿'
+        ],
+        ['', '拾', '佰', '仟']
+    ];
+    var head = n < 0
+        ? '欠'
+        : '';
+    n = Math.abs(n);
+
+    var s = '';
+
+    for (var i = 0; i < fraction.length; i++) {
+        s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+    }
+    s = s || '整';
+    n = Math.floor(n);
+
+    for (var i = 0; i < unit[0].length && n > 0; i++) {
+        var p = '';
+        for (var j = 0; j < unit[1].length && n > 0; j++) {
+            p = digit[n % 10] + unit[1][j] + p;
+            n = Math.floor(n / 10);
+        }
+        s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+    }
+    return head + s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
 }
