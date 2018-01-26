@@ -7,3 +7,7 @@ input.printBtn {
     cursor: pointer;
     text-decoration: underline;
 }
+
+div#printContainer {
+    display: none;
+}

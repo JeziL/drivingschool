@@ -25,6 +25,8 @@ $(document).ready(function () {
         });
         addPrintButton();
     });
+    $('body').append('<div id="printArea"></div>');
+    $('div#printArea').load('/static/admin/html/print.html');
 });
 
 function addPrintButton() {
@@ -70,7 +72,20 @@ function printFee(date, feeId, enroller, name, stuId, mobile, feeType, payment, 
     var moneyVal = parseFloat(money);
     var moneyUpStr = upDigit(moneyVal);
     var moneyStr = '¥' + money + '元';
-    console.log(moneyStr);
+
+    $('span#print_date').text(date);
+    $('span#print_code').text(feeId);
+    $('span#print_enroller').text(enroller);
+    $('span#print_student').text(name);
+    $('span#print_idcardnumber').text(stuId);
+    $('span#print_mobile').text(mobile);
+    $('span#print_pay_project').text(feeType);
+    $('span#print_pay_method').text(payment);
+    $('span#print_classtype').text(classTypeStr);
+    $('span#print_money_big').text(moneyUpStr);
+    $('span#print_money').text(moneyStr);
+
+    $('div#printContainer').jqprint({ importCSS: false });
 }
 
 function upDigit(n) {

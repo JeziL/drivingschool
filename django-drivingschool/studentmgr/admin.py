@@ -21,6 +21,8 @@ class StudentForm(ModelForm):
         js = (
             'admin/js/jquery-3.3.1.min.js',
             'admin/js/student_detail.js',
+            'admin/js/jquery-migrate-1.4.1.min.js',
+            'admin/js/jquery.jqprint-0.3.js',
         )
         css = {
             'all': (
