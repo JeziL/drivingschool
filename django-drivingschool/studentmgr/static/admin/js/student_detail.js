@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    // 报名可选字段（原驾照类型、换证日期）动态显示/隐藏
     var val = $('#id_applyType').val();
     if (val == 1) {
         $('.field-origLicType, .field-licChangeDate').show();
@@ -15,6 +16,7 @@ $(document).ready(function () {
         }
     });
 
+    // 在交费页面修改保存按钮行为
     $('a#suit_form_tab_fees').click(function () {
         $('input.default').attr('name', '_continue');
     });
@@ -22,6 +24,7 @@ $(document).ready(function () {
         $('input.default').attr('name', '_save');
     });
 
+    // 添加打印按钮
     addPrintButton();
     $('div.add-row a').click(function () {
         var price_str = $('div.field-class_type_price p').text();
@@ -32,6 +35,8 @@ $(document).ready(function () {
         });
         addPrintButton();
     });
+
+    // 载入打印模板
     $('body').append('<div id="printArea"></div>');
     $('div#printArea').load('/static/admin/html/print.html');
 });
@@ -40,8 +45,12 @@ function addPrintButton() {
     $('div.dynamic-fee_set h3').each(function () {
         if ($(this).children().length === 3) {
             var feeId = $(this).children('span.inline_label').text();
+            // 对已经保存过的费用，添加打印按钮并改为只读
             if (!feeId.match("^#")) {
                 $(this).append("<input type='button' class='printBtn' style='float: right;' value='打印培训费' />");
+                var feeDiv = $(this).parent();
+                feeDiv.find('select option:not(:selected)').prop('disabled', true);
+                feeDiv.find('input').attr("readonly", true);
             }
         }
     });
