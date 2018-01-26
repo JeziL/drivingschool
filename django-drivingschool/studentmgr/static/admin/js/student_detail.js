@@ -30,7 +30,10 @@ $(document).ready(function () {
 function addPrintButton() {
     $('div.dynamic-fee_set h3').each(function () {
         if ($(this).children().length === 3) {
-            $(this).append("<input type='button' class='printBtn' style='float: right;' value='打印培训费' />");
+            var feeId = $(this).children('span.inline_label').text();
+            if (!feeId.match("^#")) {
+                $(this).append("<input type='button' class='printBtn' style='float: right;' value='打印培训费' />");
+            }
         }
     });
     $('input.printBtn').each(function () {
@@ -39,7 +42,12 @@ function addPrintButton() {
     })
 }
 
-function onPrintBtnClicked() {
-    $('input[name="_continue"]').click();
-    console.log("button click.");
+function onPrintBtnClicked(e) {
+    var feeDiv = $(e.target).parent().parent();
+
+    var dateField = feeDiv.find('input.vDateField');
+    var dateStr = dateField.val().replace(/\//g, "-");
+
+    var feeId = feeDiv.find('span.inline_label').text();
+    console.log(feeId);
 }
