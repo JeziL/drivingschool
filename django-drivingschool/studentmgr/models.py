@@ -97,6 +97,7 @@ class Fee(models.Model):
     feeType = models.IntegerField('交费类别', choices=FEE_TYPE_OPTIONS, default=0)
     note = models.CharField('备注', max_length=100, null=True, blank=True)
     money = models.CharField('收费金额', max_length=10)
+    paymentMethod = models.IntegerField('付款方式', choices=PAYMENT_OPTIONS, default=0)
     feeId = models.CharField('编号', max_length=15, default=increment_fee_id, editable=False)
     createTime = models.DateTimeField('登记时间', default=timezone.now)
 
