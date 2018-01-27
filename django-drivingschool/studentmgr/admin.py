@@ -3,7 +3,7 @@ from django.forms import ModelForm
 from suit.admin import RelatedFieldAdmin
 from suit.widgets import AutosizedTextarea
 from .models import Student, ClassType, Enroller, Channel, Fee
-from .actions import export_students_as_csv_action
+from .actions import *
 
 
 # 页面标题
@@ -168,6 +168,7 @@ class FeeAdmin(RelatedFieldAdmin):
                     'feeType',
                     'money',
                     'createTime')
+    actions = (export_fees_as_csv_action(), )
     list_filter = ('createTime',
                    'student__licType',
                    'student__classType',
