@@ -51,6 +51,7 @@ class StudentAdmin(RelatedFieldAdmin):
                     'channel_type',
                     'enroller',
                     'enrollDate')
+    list_editable = ('currentStage', )
     list_filter = ('enrollDate',
                    'licType',
                    'classType',
