@@ -19,6 +19,10 @@ class SuitConfig(DjangoSuitConfig):
         ParentItem('教学管理', children=[
             ChildItem('班型管理', model='studentmgr.classtype')
         ]),
+        ParentItem('考务管理', children=[
+            ChildItem('考试计划', model='studentmgr.exam'),
+            ChildItem('考试成绩', model='studentmgr.grade')
+        ]),
         ParentItem('招生管理', children=[
             ChildItem('渠道管理', model='studentmgr.channel')
         ]),

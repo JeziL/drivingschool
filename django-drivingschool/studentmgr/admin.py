@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.forms import ModelForm
 from suit.admin import RelatedFieldAdmin
 from suit.widgets import AutosizedTextarea
-from .models import Student, ClassType, Enroller, Channel, Fee
+from .models import *
 from .actions import *
 
 
@@ -204,3 +204,56 @@ class FeeAdmin(RelatedFieldAdmin):
     student_enroller_name.short_description = '招生代表'
     student_licType.short_description = '驾照类型'
     student_classType.short_description = '班型'
+
+
+# 考试模型管理类
+@admin.register(Exam)
+class ExamAdmin(RelatedFieldAdmin):
+    list_display = ('examDate',
+                    'subject',
+                    'licType',
+                    'students_count',
+                    'addr')
+    list_filter = ('examDate',
+                   'subject',
+                   'licType')
+    suit_list_filter_horizontal = list_filter
+    search_fields = ('examDate', )
+
+    # 用于获取参考人数
+    def students_count(self, obj):
+        return obj.students.count()
+    students_count.short_description = '参考人数'
+
+
+# 成绩模型管理类
+@admin.register(Grade)
+class GradeAdmin(RelatedFieldAdmin):
+    list_display = ('student_name',
+                    'student_mobile',
+                    'exam_licType',
+                    'exam_subject',
+                    'exam_examDate',
+                    'hasPassed')
+
+    # 用于获取学员和考试相关信息
+    def student_name(self, obj):
+        return obj.student.name
+
+    def student_mobile(self, obj):
+        return obj.student.mobile
+
+    def exam_licType(self, obj):
+        return obj.exam.get_licType_display()
+
+    def exam_subject(self, obj):
+        return obj.exam.get_subject_display()
+
+    def exam_examDate(self, obj):
+        return obj.exam.examDate
+
+    student_name.short_description = '姓名'
+    student_mobile.short_description = '手机号'
+    exam_licType.short_description = '驾照类型'
+    exam_subject.short_description = '考试科目'
+    exam_examDate.short_description = '考试时间'
