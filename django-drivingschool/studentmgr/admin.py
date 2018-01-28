@@ -206,6 +206,24 @@ class FeeAdmin(RelatedFieldAdmin):
     student_classType.short_description = '班型'
 
 
+# 成绩模型内联管理类
+class GradeInlineAdmin(admin.TabularInline):
+    model = Grade
+    extra = 0
+
+    def get_formset(self, request, obj=None, **kwargs):
+        self.parent_obj = obj
+        return super(GradeInlineAdmin, self).get_formset(request, obj, **kwargs)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == 'student' and hasattr(self, 'parent_obj'):
+            if hasattr(self.parent_obj, 'students'):
+                kwargs['queryset'] = self.parent_obj.students
+            else:
+                kwargs['queryset'] = Student.objects.none()
+        return super(GradeInlineAdmin, self).formfield_for_foreignkey(db_field, request, **kwargs)
+
+
 # 考试模型管理类
 @admin.register(Exam)
 class ExamAdmin(RelatedFieldAdmin):
@@ -220,6 +238,7 @@ class ExamAdmin(RelatedFieldAdmin):
     suit_list_filter_horizontal = list_filter
     search_fields = ('examDate', )
     filter_horizontal = ('students', )
+    inlines = (GradeInlineAdmin, )
 
     # 用于获取参考人数
     def students_count(self, obj):
