@@ -273,6 +273,12 @@ class GradeAdmin(RelatedFieldAdmin):
                     'exam_subject',
                     'exam_examDate',
                     'hasPassed')
+    list_filter = ('exam__examDate',
+                   'exam__subject',
+                   'exam__licType',
+                   'hasPassed')
+    suit_list_filter_horizontal = list_filter
+    search_fields = ('student__name', )
 
     def has_add_permission(self, request):
         return False
