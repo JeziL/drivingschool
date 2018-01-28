@@ -210,6 +210,7 @@ class FeeAdmin(RelatedFieldAdmin):
 class GradeInlineAdmin(admin.TabularInline):
     model = Grade
     extra = 0
+    suit_classes = 'suit-tab suit-tab-grades'
 
     def get_formset(self, request, obj=None, **kwargs):
         self.parent_obj = obj
@@ -239,6 +240,23 @@ class ExamAdmin(RelatedFieldAdmin):
     search_fields = ('examDate', )
     filter_horizontal = ('students', )
     inlines = (GradeInlineAdmin, )
+
+    fieldsets = [
+        (None, {
+            'classes': ('suit-tab suit-tab-exam', ),
+            'fields': [
+                'examDate',
+                'subject',
+                'licType',
+                'addr',
+                'students',
+            ]
+        }),
+    ]
+    suit_form_tabs = (
+        ('exam', '考试信息'),
+        ('grades', '成绩登记'),
+    )
 
     # 用于获取参考人数
     def students_count(self, obj):
