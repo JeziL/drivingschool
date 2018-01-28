@@ -52,6 +52,7 @@ class Student(models.Model):
     class Meta:
         verbose_name = '学员'
         verbose_name_plural = '学员'
+        ordering = ('-id', )
     name = models.CharField('姓名', max_length=20)
     sex = models.IntegerField('性别', choices=SEX_OPTIONS, default=0)
     idNo = models.CharField('证件号', max_length=20)

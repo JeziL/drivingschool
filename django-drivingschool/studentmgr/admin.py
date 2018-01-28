@@ -219,6 +219,7 @@ class ExamAdmin(RelatedFieldAdmin):
                    'licType')
     suit_list_filter_horizontal = list_filter
     search_fields = ('examDate', )
+    filter_horizontal = ('students', )
 
     # 用于获取参考人数
     def students_count(self, obj):
