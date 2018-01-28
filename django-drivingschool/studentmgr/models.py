@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.utils.formats import date_format
 from .options import *
 
 
@@ -103,3 +104,32 @@ class Fee(models.Model):
 
     def __str__(self):
         return self.feeId
+
+
+# 考试模型类
+class Exam(models.Model):
+    class Meta:
+        verbose_name = '考试'
+        verbose_name_plural = '考试'
+    examDate = models.DateField('考试时间', default=timezone.now)
+    subject = models.IntegerField('考试科目', choices=SUBJECT_OPTIONS, default=0)
+    licType = models.IntegerField('驾照类型', choices=LICENSE_TYPE_OPTIONS, default=5)
+    addr = models.CharField('考试地点', max_length=100, null=True, blank=True)
+    students = models.ManyToManyField(Student, verbose_name='考试学员')
+
+    def __str__(self):
+        return date_format(self.examDate, 'SHORT_DATE_FORMAT') + ' ' + self.get_subject_display()
+
+
+# 成绩模型类
+class Grade(models.Model):
+    class Meta:
+        verbose_name = '成绩'
+        verbose_name_plural = '成绩'
+    student = models.ForeignKey(Student, verbose_name='学员', on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, verbose_name='考试', on_delete=models.CASCADE)
+    hasPassed = models.BooleanField(verbose_name='是否通过', default=True)
+    score = models.CharField('分数', max_length=5, null=True, blank=True)
+
+    def __str__(self):
+        return self.student.name + ' ' + str(self.exam)
