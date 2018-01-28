@@ -274,6 +274,9 @@ class GradeAdmin(RelatedFieldAdmin):
                     'exam_examDate',
                     'hasPassed')
 
+    def has_add_permission(self, request):
+        return False
+
     # 用于获取学员和考试相关信息
     def student_name(self, obj):
         return obj.student.name
