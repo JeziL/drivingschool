@@ -39,6 +39,17 @@ class FeeInlineAdmin(admin.StackedInline):
     suit_classes = 'suit-tab suit-tab-fees'
 
 
+# 成绩模型内联于学员模型类
+class GradeInlineStu(admin.TabularInline):
+    model = Grade
+    extra = 0
+    readonly_fields = ('exam', )
+    suit_classes = 'suit-tab suit-tab-gradeinstu'
+
+    def has_add_permission(self, request):
+        return False
+
+
 # 学员模型管理类
 @admin.register(Student)
 class StudentAdmin(RelatedFieldAdmin):
@@ -64,7 +75,7 @@ class StudentAdmin(RelatedFieldAdmin):
                      'mobile',
                      'idNo',
                      'enroller__name')
-    inlines = (FeeInlineAdmin, )
+    inlines = (FeeInlineAdmin, GradeInlineStu, )
     readonly_fields = ('class_type_price', )
     fieldsets = [
         ('个人信息', {
@@ -103,11 +114,12 @@ class StudentAdmin(RelatedFieldAdmin):
             'fields': [
                 'class_type_price',
             ]
-        })
+        }),
     ]
     suit_form_tabs = (
         ('enroll', '报名'),
         ('fees', '交费'),
+        ('gradeinstu', '成绩', )
     )
 
     # 用于显示渠道类型
