@@ -59,7 +59,7 @@ class Student(models.Model):
     region = models.IntegerField('地域', choices=REGION_OPTIONS, default=0)
     mobile = models.CharField('手机号', max_length=15)
     backupPhone = models.CharField('备用电话', max_length=15, null=True, blank=True)
-    addr = models.CharField('住址', max_length=200)
+    addr = models.CharField('住址', max_length=200, null=True, blank=True)
     licType = models.IntegerField('驾照类型', choices=LICENSE_TYPE_OPTIONS, default=5)
     applyType = models.IntegerField('申请方式', choices=APPLY_TYPE_OPTIONS, default=0)
     origLicType = models.IntegerField('原驾照类型', choices=LICENSE_TYPE_OPTIONS, default=0, null=True, blank=True)
