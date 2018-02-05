@@ -275,6 +275,16 @@ class ExamAdmin(RelatedFieldAdmin):
         return obj.students.count()
     students_count.short_description = '参考人数'
 
+    # 保存考试时，为每个学员创建对应的成绩对象
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        if form.is_valid():
+            exam = form.instance
+            for stu in form.cleaned_data['students']:
+                if Grade.objects.filter(exam=exam, student=stu).count() == 0:
+                    grade = Grade(student=stu, exam=exam, hasPassed=True, score='')
+                    grade.save()
+
 
 # 成绩模型管理类
 @admin.register(Grade)
