@@ -326,3 +326,135 @@ class GradeAdmin(RelatedFieldAdmin):
     exam_licType.short_description = '驾照类型'
     exam_subject.short_description = '考试科目'
     exam_examDate.short_description = '考试时间'
+
+
+# 教练模型管理类
+@admin.register(Coach)
+class CoachAdmin(RelatedFieldAdmin):
+    list_display = ('name',
+                    'sex',
+                    'mobile')
+    search_fields = ('name',
+                     'mobile')
+    list_filter = ()
+
+
+# 车辆模型表单类
+class VehicleForm(ModelForm):
+    class Meta:
+        widgets = {
+            'note': AutosizedTextarea,
+        }
+
+
+# 车辆模型管理类
+@admin.register(Vehicle)
+class VehicleAdmin(RelatedFieldAdmin):
+    form = VehicleForm
+    list_display = ('vid',
+                    'vin',
+                    'licId',
+                    'brand',
+                    'use',
+                    'name')
+    list_filter = ('use', )
+    suit_list_filter_horizontal = list_filter
+    search_fields = ('vid',
+                     'licId')
+
+
+# 油气模型管理类
+@admin.register(Fuel)
+class FuelAdmin(RelatedFieldAdmin):
+    list_display = ('veh_licId',
+                    'fType',
+                    'coach_name',
+                    'money',
+                    'createDate')
+    search_fields = ('veh__licId', )
+    list_filter = ('fType',
+                   'createDate',
+                   'coach__name',
+                   'veh__licId')
+    suit_list_filter_horizontal = list_filter
+
+    # 用于获取车辆和教练相关信息
+    def veh_licId(self, obj):
+        return obj.veh.licId
+
+    def coach_name(self, obj):
+        return obj.coach.name
+
+    veh_licId.short_description = '车牌号'
+    coach_name.short_description = '上报教练'
+
+
+# 维修模型表单类
+class MaintenanceForm(ModelForm):
+    class Meta:
+        widgets = {
+            'note': AutosizedTextarea,
+        }
+
+
+# 维修模型管理类
+@admin.register(Maintenance)
+class MaintenanceAdmin(RelatedFieldAdmin):
+    form = MaintenanceForm
+    list_display = ('veh_licId',
+                    'coach_name',
+                    'note',
+                    'money',
+                    'createDate')
+    search_fields = ('veh__licId', )
+    list_filter = ('createDate', )
+    suit_list_filter_horizontal = list_filter
+
+    # 用于获取车辆和教练相关信息
+    def veh_licId(self, obj):
+        return obj.veh.licId
+
+    def coach_name(self, obj):
+        return obj.coach.name
+
+    veh_licId.short_description = '车牌号'
+    coach_name.short_description = '上报教练'
+
+
+# 保险模型管理类
+@admin.register(Insurance)
+class InsuranceAdmin(RelatedFieldAdmin):
+    list_display = ('veh_licId',
+                    'company',
+                    'insType',
+                    'money',
+                    'startDate',
+                    'endDate',
+                    'createDate')
+    search_fields = ('veh__licId', )
+    list_filter = ('createDate', )
+    suit_list_filter_horizontal = list_filter
+
+    # 用于获取车辆和教练相关信息
+    def veh_licId(self, obj):
+        return obj.veh.licId
+
+    veh_licId.short_description = '车牌号'
+
+
+# 年审模型管理类
+@admin.register(Examination)
+class ExaminationAdmin(RelatedFieldAdmin):
+    list_display = ('veh_licId',
+                    'createDate',
+                    'startDate',
+                    'endDate')
+    search_fields = ('veh__licId', )
+    list_filter = ('createDate', )
+    suit_list_filter_horizontal = list_filter
+
+    # 用于获取车辆和教练相关信息
+    def veh_licId(self, obj):
+        return obj.veh.licId
+
+    veh_licId.short_description = '车牌号'

@@ -134,3 +134,98 @@ class Grade(models.Model):
 
     def __str__(self):
         return self.student.name + ' ' + str(self.exam)
+
+
+# 教练模型类
+class Coach(models.Model):
+    class Meta:
+        verbose_name = '教练'
+        verbose_name_plural = '教练'
+    name = models.CharField('姓名', max_length=20)
+    sex = models.IntegerField('性别', choices=SEX_OPTIONS, default=0)
+    mobile = models.CharField('手机号', max_length=15, null=True, blank=True)
+    idNo = models.CharField('证件号', max_length=20, null=True, blank=True)
+    note = models.TextField('备注', null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+# 车辆模型类
+class Vehicle(models.Model):
+    class Meta:
+        verbose_name = '车辆'
+        verbose_name_plural = '车辆'
+    brand = models.CharField('品牌型号', max_length=15, null=True, blank=True)
+    vid = models.CharField('车辆编号', max_length=15)
+    vin = models.CharField('车架号', max_length=20)
+    licId = models.CharField('车牌号', max_length=10)
+    licDate = models.DateField('上牌日期', default=timezone.now)
+    use = models.IntegerField('车辆用途', choices=VEHICLE_USE_OPTIONS, default=0)
+    name = models.CharField('车主姓名', max_length=20)
+    tel = models.CharField('联系电话', max_length=20, null=True, blank=True)
+    note = models.TextField('备注', null=True, blank=True)
+
+    def __str__(self):
+        return self.licId
+
+
+# 油气模型类
+class Fuel(models.Model):
+    class Meta:
+        verbose_name = '油气'
+        verbose_name_plural = '油气'
+    fType = models.IntegerField('类型', choices=FUEL_TYPE_OPTIONS, default=0)
+    veh = models.ForeignKey(Vehicle, verbose_name='车辆', on_delete=models.CASCADE)
+    coach = models.ForeignKey(Coach, verbose_name='上报教练', on_delete=models.CASCADE)
+    money = models.CharField('金额', max_length=10)
+    createDate = models.DateField('加油时间', default=timezone.now)
+
+    def __str__(self):
+        return date_format(self.createDate, 'SHORT_DATE_FORMAT') + ' ' + self.veh.licId
+
+
+# 维修模型类
+class Maintenance(models.Model):
+    class Meta:
+        verbose_name = '维修'
+        verbose_name_plural = '维修'
+    veh = models.ForeignKey(Vehicle, verbose_name='车辆', on_delete=models.CASCADE)
+    coach = models.ForeignKey(Coach, verbose_name='上报教练', on_delete=models.CASCADE)
+    money = models.CharField('维修费用', max_length=10)
+    createDate = models.DateField('维修时间', default=timezone.now)
+    note = models.TextField('维修说明', null=True, blank=True)
+
+    def __str__(self):
+        return date_format(self.createDate, 'SHORT_DATE_FORMAT') + ' ' + self.veh.licId
+
+
+# 保险模型类
+class Insurance(models.Model):
+    class Meta:
+        verbose_name = '保险'
+        verbose_name_plural = '保险'
+    veh = models.ForeignKey(Vehicle, verbose_name='车辆', on_delete=models.CASCADE)
+    company = models.CharField('保险公司', max_length=20)
+    insType = models.CharField('险种', max_length=20)
+    money = models.CharField('保险金额', max_length=10)
+    createDate = models.DateField('投保时间', default=timezone.now)
+    startDate = models.DateField('生效时间', default=timezone.now)
+    endDate = models.DateField('失效时间', default=timezone.now)
+
+    def __str__(self):
+        return date_format(self.createDate, 'SHORT_DATE_FORMAT') + ' ' + self.veh.licId
+
+
+# 年审模型类
+class Examination(models.Model):
+    class Meta:
+        verbose_name = '年审'
+        verbose_name_plural = '年审'
+    veh = models.ForeignKey(Vehicle, verbose_name='车辆', on_delete=models.CASCADE)
+    createDate = models.DateField('审查日期', default=timezone.now)
+    startDate = models.DateField('生效日期', default=timezone.now)
+    endDate = models.DateField('失效日期', default=timezone.now)
+
+    def __str__(self):
+        return date_format(self.createDate, 'SHORT_DATE_FORMAT') + ' ' + self.veh.licId

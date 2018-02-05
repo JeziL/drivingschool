@@ -17,7 +17,8 @@ class SuitConfig(DjangoSuitConfig):
             ChildItem('用户管理', model='auth.user')
         ]),
         ParentItem('教学管理', children=[
-            ChildItem('班型管理', model='studentmgr.classtype')
+            ChildItem('班型管理', model='studentmgr.classtype'),
+            ChildItem('教练管理', model='studentmgr.coach')
         ]),
         ParentItem('考务管理', children=[
             ChildItem('考试计划', model='studentmgr.exam'),
@@ -25,6 +26,13 @@ class SuitConfig(DjangoSuitConfig):
         ]),
         ParentItem('招生管理', children=[
             ChildItem('渠道管理', model='studentmgr.channel')
+        ]),
+        ParentItem('车辆管理', children=[
+            ChildItem('车辆信息', model='studentmgr.vehicle'),
+            ChildItem('车辆加油', model='studentmgr.fuel'),
+            ChildItem('车辆维修', model='studentmgr.maintenance'),
+            ChildItem('车辆保险', model='studentmgr.insurance'),
+            ChildItem('车辆年审', model='studentmgr.examination'),
         ]),
         ParentItem('财务管理', children=[
             ChildItem('费用登记', model='studentmgr.student'),
