@@ -74,7 +74,9 @@ class StudentAdmin(RelatedFieldAdmin):
     search_fields = ('name',
                      'mobile',
                      'idNo',
-                     'enroller__name')
+                     'enroller__name',
+                     'pyFirstLetters',
+                     'pyFull')
     inlines = (FeeInlineAdmin, GradeInlineStu, )
     readonly_fields = ('class_type_price', )
     fieldsets = [
