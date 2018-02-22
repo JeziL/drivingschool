@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.formats import date_format
-from pypinyin import pinyin, lazy_pinyin, Style
+from pypinyin import lazy_pinyin, Style
 from .options import *
 
 
