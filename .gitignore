@@ -5,6 +5,7 @@
 
 # User-specific stuff:
 .idea/
+django-drivingschool/collected_static/
 
 # CMake
 cmake-build-debug/
