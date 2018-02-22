@@ -11,6 +11,7 @@ django = "*"
 mysqlclient = "*"
 "cce4815" = {file = "https://github.com/Sicilia04/django-suit/tarball/v2"}
 unicodecsv = "*"
+pypinyin = "*"
 
 
 [dev-packages]

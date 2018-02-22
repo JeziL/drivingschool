@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.formats import date_format
+from pypinyin import pinyin, lazy_pinyin, Style
 from .options import *
 
 
@@ -54,6 +55,8 @@ class Student(models.Model):
         verbose_name_plural = '学员'
         ordering = ('-id', )
     name = models.CharField('姓名', max_length=20)
+    pyFirstLetters = models.CharField('拼音首字母', max_length=20, null=True, blank=True)
+    pyFull = models.CharField('全拼', max_length=100, null=True, blank=True)
     sex = models.IntegerField('性别', choices=SEX_OPTIONS, default=0)
     idNo = models.CharField('证件号', max_length=20)
     region = models.IntegerField('地域', choices=REGION_OPTIONS, default=0)
@@ -72,6 +75,11 @@ class Student(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.pyFirstLetters = ''.join(lazy_pinyin(self.name, style=Style.FIRST_LETTER, errors='ignore'))
+        self.pyFull = ''.join(lazy_pinyin(self.name, errors='ignore'))
+        super().save(*args, **kwargs)
 
 
 # 用于在创建时生成按日自增的费用编号
