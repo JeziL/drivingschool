@@ -1,23 +1,16 @@
 [[source]]
-
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
-
 [packages]
-
-django = "*"
+django = "==2.0.8"
 mysqlclient = "*"
-"cce4815" = {file = "https://github.com/Sicilia04/django-suit/tarball/v2"}
 unicodecsv = "*"
 pypinyin = "*"
-
+"6210100" = {file = "https://github.com/darklow/django-suit/tarball/v2"}
 
 [dev-packages]
 
-
-
 [requires]
-
 python_version = "3.6"
