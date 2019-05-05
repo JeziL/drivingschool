@@ -22,7 +22,7 @@ def export_students_as_csv_action():
             '录入日期',
             # '渠道类型',
             # '渠道名称',
-            # '招生代表',
+            '招生代表',
             '备注',
         ]
         writer.writerow(header)
@@ -40,7 +40,10 @@ def export_students_as_csv_action():
             row.append(date_format(obj.enrollDate, 'SHORT_DATETIME_FORMAT'))
             # row.append(obj.enroller.channel.get_channelType_display())
             # row.append(obj.enroller.channel.name)
-            # row.append(obj.enroller.name)
+            if obj.enroller:
+                row.append(obj.enroller.name)
+            else:
+                row.append('-')
             note = obj.note
             if note:
                 note = note.replace('\n', ' ')
