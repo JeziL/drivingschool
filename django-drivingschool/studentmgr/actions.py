@@ -41,7 +41,11 @@ def export_students_as_csv_action():
             # row.append(obj.enroller.channel.get_channelType_display())
             # row.append(obj.enroller.channel.name)
             # row.append(obj.enroller.name)
-            row.append(obj.note)
+            note = obj.note
+            if note:
+                note = note.replace('\n', ' ')
+                note = note.replace('\r', ' ')
+            row.append(note)
             writer.writerow(row)
         return response
 
