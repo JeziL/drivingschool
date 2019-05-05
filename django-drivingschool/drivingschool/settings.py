@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'i%*5c)69n#v9slr&vdfts!sp57^dg91_mxmzeb=o#l5nxegnkj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = platform.system() == 'Darwin'
+DEBUG = platform.system() != 'Linux'
 
 ALLOWED_HOSTS = ['*']
 
