@@ -126,7 +126,10 @@ class StudentAdmin(RelatedFieldAdmin):
 
     # 用于显示渠道类型
     def channel_type(self, obj):
-        return obj.enroller.channel.get_channelType_display()
+        if obj.enroller:
+            if obj.enroller.channel:
+                return obj.enroller.channel.get_channelType_display()
+        return '-'
     channel_type.short_description = '渠道类型'
 
     # 用于显示班型价格
