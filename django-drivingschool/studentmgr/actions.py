@@ -17,12 +17,12 @@ def export_students_as_csv_action():
             '手机号',
             '地址',
             '驾照类型',
-            '报名班型',
+            # '报名班型',
             '当前状态',
             '录入日期',
-            '渠道类型',
-            '渠道名称',
-            '招生代表',
+            # '渠道类型',
+            # '渠道名称',
+            # '招生代表',
             '备注',
         ]
         writer.writerow(header)
@@ -35,12 +35,12 @@ def export_students_as_csv_action():
             row.append(obj.mobile)
             row.append(obj.addr)
             row.append(obj.get_licType_display())
-            row.append(obj.classType.name)
+            # row.append(obj.classType.name)
             row.append(obj.get_currentStage_display())
             row.append(date_format(obj.enrollDate, 'SHORT_DATETIME_FORMAT'))
-            row.append(obj.enroller.channel.get_channelType_display())
-            row.append(obj.enroller.channel.name)
-            row.append(obj.enroller.name)
+            # row.append(obj.enroller.channel.get_channelType_display())
+            # row.append(obj.enroller.channel.name)
+            # row.append(obj.enroller.name)
             row.append(obj.note)
             writer.writerow(row)
         return response
