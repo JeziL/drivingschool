@@ -8,7 +8,7 @@ def export_students_as_csv_action():
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename=hongming_students.csv'
 
-        writer = unicodecsv.writer(response, encoding='utf-8')
+        writer = unicodecsv.writer(response, encoding='gbk')
         header = [
             '序号',
             '姓名',
